@@ -6,10 +6,6 @@ Requires CUDA, includes [Pangolin](https://github.com/stevenlovegrove/Pangolin),
 Install;
 
 ```bash
-sudo apt-get install build-essential cmake libglew-dev libpng-dev
-git clone https://github.com/mp3guy/ICPCUDA.git
-cd ICPCUDA
-git submodule update --init
 cd third-party/Pangolin/
 mkdir build
 cd build/
