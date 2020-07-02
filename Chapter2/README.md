@@ -1,5 +1,5 @@
-# ICPCUDA
-Super fast implementation of ICP in CUDA for compute capable devices 3.5 or higher. On an NVIDIA GeForce GTX TITAN X it runs at over __750Hz__ (using projective data assocation). Last tested with Ubuntu 18.04.2, CUDA 10.1 and NVIDIA drivers 418.39.
+# ICP-CUDA
+Super fast implementation of ICP in CUDA for compute capable devices 3.5 or higher. On an NVIDIA Tesla V100 it runs at over __750Hz__ (using projective data assocation). Last tested with Ubuntu 18.04.2, CUDA 10.1 and NVIDIA drivers 418.39.
 
 Requires CUDA, includes [Pangolin](https://github.com/stevenlovegrove/Pangolin), [Eigen](https://github.com/stevenlovegrove/eigen) and [Sophus](https://github.com/stevenlovegrove/Sophus) third party submodules. I've built it to take in raw TUM RGB-D datasets to do frame-to-frame dense ICP as an example application.
 
@@ -35,7 +35,7 @@ Where ~/Desktop/rgbd\_dataset\_freiburg1\_desk/ contains the depth.txt file, for
 The main idea to getting the best performance is determining the best thread/block sizes to use. I have provided an exhaustive search function to do this, since it varies between GPUs. Simply pass the "-v" switch to the program to activate the search. The code will then first do a search for the best thread/block sizes and then run ICP and output something like this on an nVidia GeForce GTX TITAN X;
 
 ```bash
-GeForce GTX TITAN X
+GeForce Tesla V100
 Searching for the best thread/block configuration for your GPU...
 Best: 256 threads, 96 blocks (1.3306ms), 100%
 ICP: 1.3236ms
@@ -48,7 +48,3 @@ The code will output one file; output.poses. You can evaluate it on the TUM benc
 python ~/stuff/Kinect_Logs/Freiburg/evaluate_ate.py ~/Desktop/rgbd_dataset_freiburg1_desk/groundtruth.txt output.poses 
 0.144041
 ```
-
-The difference in values comes down to the fact that each method uses a different reduction scheme and floating point operations are [not associative](https://halshs.archives-ouvertes.fr/hal-00949355v1/document).
-
-Also, if you're using this code in academic work and it would be suitable to do so, please consider referencing some of my possibly relevant [research](http://www.thomaswhelan.ie/#publications) in your literature review/related work section. 
